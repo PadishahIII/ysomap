@@ -14,7 +14,7 @@ import java.util.Map;
 public abstract class BaseSerializer<T> implements Serializer<T> {
 
     public String ENCODER = null;
-    public Map<String, String> UIDMap = new HashMap<>();
+    public Map<String, String>   UIDMap = new HashMap<>();
 
     @Override
     public String getEncoder() {

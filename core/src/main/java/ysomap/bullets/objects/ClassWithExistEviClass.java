@@ -2,6 +2,7 @@ package ysomap.bullets.objects;
 
 import echo.SocketEchoPayload;
 import echo.TomcatEchoPayload;
+import echo.TomcatEchoPayload2;
 import javassist.ClassPool;
 import javassist.CtClass;
 import loader.*;
@@ -151,6 +152,7 @@ public class ClassWithExistEviClass extends AbstractBullet<byte[]> {
         effects.put("default", new Object[]{TemplatesImplBullet.StubTransletPayload.class, "%s", "exec"});
         effects.put("FileWrite", new Object[]{TemplatesImplBullet.StubTransletPayload.class, "%s", "base64;fileWrite"});
         effects.put("TomcatEcho", new Object[]{TomcatEchoPayload.class, null, null});
+        effects.put("TomcatEcho2", new Object[]{TomcatEchoPayload2.class, null, null});
         effects.put("SocketEcho",
                 new Object[]{SocketEchoPayload.class,
                         "host=\"%s\";port=%s;", "split"});

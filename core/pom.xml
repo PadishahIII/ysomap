@@ -11,22 +11,23 @@
     <artifactId>core</artifactId>
     <properties>
         <spring.version>4.3.16.RELEASE</spring.version> <!-- 5.3.4  4.3.16.RELEASE -->
-<!--        <hessian.group>com.alipay.sofa</hessian.group> &lt;!&ndash; com.caucho  com.alipay.sofa &ndash;&gt;-->
-<!--        <hessian.version>4.0.4</hessian.version>      &lt;!&ndash; 4.0.38      3.3.13 4.0.4    &ndash;&gt;-->
+        <!--        <hessian.group>com.alipay.sofa</hessian.group> &lt;!&ndash; com.caucho  com.alipay.sofa &ndash;&gt;-->
+        <!--        <hessian.version>4.0.4</hessian.version>      &lt;!&ndash; 4.0.38      3.3.13 4.0.4    &ndash;&gt;-->
         <hessian.group>com.caucho</hessian.group> <!-- com.caucho  com.alipay.sofa -->
         <hessian.version>4.0.38</hessian.version>      <!-- 4.0.38      3.3.13 4.0.4    -->
-<!--        <hessian.group>com.alipay.sofa</hessian.group> &lt;!&ndash; com.caucho  com.alipay.sofa &ndash;&gt;-->
-<!--        <hessian.version>3.3.13</hessian.version>      &lt;!&ndash; 4.0.38      3.3.13 4.0.4    &ndash;&gt;-->
-<!--        <hessian.group>hessian</hessian.group> &lt;!&ndash; com.caucho  com.alipay.sofa &ndash;&gt;-->
-<!--        <hessian.version>3.2.7.alipay</hessian.version>      &lt;!&ndash; 4.0.38      3.3.13 4.0.4    &ndash;&gt;-->
+        <!--        <hessian.group>com.alipay.sofa</hessian.group> &lt;!&ndash; com.caucho  com.alipay.sofa &ndash;&gt;-->
+        <!--        <hessian.version>3.3.13</hessian.version>      &lt;!&ndash; 4.0.38      3.3.13 4.0.4    &ndash;&gt;-->
+        <!--        <hessian.group>hessian</hessian.group> &lt;!&ndash; com.caucho  com.alipay.sofa &ndash;&gt;-->
+        <!--        <hessian.version>3.2.7.alipay</hessian.version>      &lt;!&ndash; 4.0.38      3.3.13 4.0.4    &ndash;&gt;-->
         <xstream.version>1.4.10</xstream.version>
-<!--        <jackson.version>2.9.5</jackson.version>-->
+        <!--        <jackson.version>2.9.5</jackson.version>-->
         <jackson.version>2.15.0</jackson.version>
         <fastjson.version>1.2.58</fastjson.version>
-<!--        <fastjson.version>2.0.24</fastjson.version>-->
+        <!--        <fastjson.version>2.0.24</fastjson.version>-->
         <kryo.version>3.0.3</kryo.version>
-<!--        <cb.version>1.9.2</cb.version>-->
-        <cb.version>1.7.0</cb.version>
+        <cb.version>1.9.2</cb.version>
+<!--                <cb.version>1.6.1</cb.version>-->
+        <!--        <cb.version>1.7.0</cb.version>-->
         <cc.version>3.2.1</cc.version>
     </properties>
     <dependencies>
@@ -147,16 +148,16 @@
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.mvel/mvel2 -->
-<!--        <dependency>-->
-<!--            <groupId>org.mvel</groupId>-->
-<!--            <artifactId>mvel2</artifactId>-->
-<!--            <version>2.4.15.Final</version>-->
-<!--        </dependency>-->
         <!--        <dependency>-->
-<!--            <groupId>ch.qos.logback</groupId>-->
-<!--            <artifactId>logback-core</artifactId>-->
-<!--            <version>1.2.3</version>-->
-<!--        </dependency>-->
+        <!--            <groupId>org.mvel</groupId>-->
+        <!--            <artifactId>mvel2</artifactId>-->
+        <!--            <version>2.4.15.Final</version>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>ch.qos.logback</groupId>-->
+        <!--            <artifactId>logback-core</artifactId>-->
+        <!--            <version>1.2.3</version>-->
+        <!--        </dependency>-->
 
         <dependency>
             <groupId>org.aspectj</groupId>
@@ -201,12 +202,12 @@
             <artifactId>rome-utils</artifactId>
             <version>1.7.0</version>
         </dependency>
-<!--        <dependency>-->
-<!--            &lt;!&ndash; for rome &ndash;&gt;-->
-<!--            <groupId>rome</groupId>-->
-<!--            <artifactId>rome</artifactId>-->
-<!--            <version>1.0</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            &lt;!&ndash; for rome &ndash;&gt;-->
+        <!--            <groupId>rome</groupId>-->
+        <!--            <artifactId>rome</artifactId>-->
+        <!--            <version>1.0</version>-->
+        <!--        </dependency>-->
         <dependency>
             <!-- for xbean -->
             <groupId>org.apache.xbean</groupId>
@@ -240,32 +241,32 @@
         </dependency>
 
         <!--        <dependency>-->
-<!--            <groupId>org.codehaus.groovy</groupId>-->
-<!--            <artifactId>groovy-all</artifactId>-->
-<!--            <version>2.1.9</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.codehaus.groovy</groupId>-->
-<!--            <artifactId>groovy-all-soureces</artifactId>-->
-<!--            <version>2.1.9</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.hibernate</groupId>-->
-<!--            <artifactId>hibernate-core</artifactId>-->
-<!--            <version>4.3.11.Final</version>-->
-<!--        </dependency>-->
+        <!--            <groupId>org.codehaus.groovy</groupId>-->
+        <!--            <artifactId>groovy-all</artifactId>-->
+        <!--            <version>2.1.9</version>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.codehaus.groovy</groupId>-->
+        <!--            <artifactId>groovy-all-soureces</artifactId>-->
+        <!--            <version>2.1.9</version>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.hibernate</groupId>-->
+        <!--            <artifactId>hibernate-core</artifactId>-->
+        <!--            <version>4.3.11.Final</version>-->
+        <!--        </dependency>-->
 
         <!-- jndi tomcat reference test -->
-<!--        <dependency>-->
-<!--            <groupId>org.apache.tomcat</groupId>-->
-<!--            <artifactId>tomcat-jasper-el</artifactId>-->
-<!--            <version>9.0.1</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.apache.tomcat</groupId>-->
-<!--            <artifactId>tomcat-el-api</artifactId>-->
-<!--            <version>9.0.1</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.apache.tomcat</groupId>-->
+        <!--            <artifactId>tomcat-jasper-el</artifactId>-->
+        <!--            <version>9.0.1</version>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.apache.tomcat</groupId>-->
+        <!--            <artifactId>tomcat-el-api</artifactId>-->
+        <!--            <version>9.0.1</version>-->
+        <!--        </dependency>-->
         <!-- jndi tomcat reference test end -->
         <!-- castor test start -->
         <dependency>
@@ -294,17 +295,45 @@
             <version>4.1.85.Final</version>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>org.apache.tomcat.embed</groupId>-->
-<!--            <artifactId>tomcat-embed-core</artifactId>-->
-<!--            <version>9.0.39</version>-->
-<!--        </dependency>-->
-<!--        for dubbo -->
+        <!--        <dependency>-->
+        <!--            <groupId>org.apache.tomcat.embed</groupId>-->
+        <!--            <artifactId>tomcat-embed-core</artifactId>-->
+        <!--            <version>9.0.39</version>-->
+        <!--        </dependency>-->
+        <!--        for dubbo -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>hessian-lite</artifactId>
             <version>3.2.12</version>
         </dependency>
+        <dependency>
+            <groupId>rt</groupId>
+            <artifactId>rt</artifactId>
+            <scope>system</scope>
+            <version>1.0</version>
+            <systemPath>${java.home}/lib/rt.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>jce</groupId>
+            <artifactId>jce</artifactId>
+            <scope>system</scope>
+            <version>1.0</version>
+            <systemPath>${java.home}/lib/jce.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>nashorn</groupId>
+            <artifactId>nashorn</artifactId>
+            <scope>system</scope>
+            <version>1.0</version>
+            <systemPath>${java.home}/lib/ext/nashorn.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>RELEASE</version>
+            <scope>test</scope>
+        </dependency>
+
 
     </dependencies>
 

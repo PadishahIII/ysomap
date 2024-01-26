@@ -16,7 +16,7 @@ import java.util.Map;
  * @author wh1t3P1g
  * @since 2021/6/13
  */
-public abstract class AbstractPayload<T> implements Payload<T>{
+public abstract class   AbstractPayload<T> implements Payload<T>{
 
     public Serializer<?> serializer;
     public String serializeType;

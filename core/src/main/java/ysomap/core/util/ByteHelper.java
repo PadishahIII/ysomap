@@ -2,6 +2,15 @@ package ysomap.core.util;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
+import ysomap.common.util.Logger;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * @author wh1t3p1g
@@ -49,7 +58,7 @@ public class ByteHelper {
                 | (((long) bb[idx + 7] & 0xFF) << 0);
     }
 
-    public static byte[] combine(byte[] b1, byte[] b2){
+    public static byte[] combine(byte[] b1, byte[] b2) {
         byte[] ret = new byte[b1.length + b2.length];
         System.arraycopy(b1, 0, ret, 0, b1.length);
         System.arraycopy(b2, 0, ret, b1.length, b2.length);
@@ -62,6 +71,7 @@ public class ByteHelper {
 
     /**
      * Convert hex string to byte[]
+     *
      * @param hexString the hex string
      * @return byte[]
      */
@@ -76,6 +86,7 @@ public class ByteHelper {
 
     /**
      * Convert char to byte
+     *
      * @param c char
      * @return byte
      */
@@ -87,12 +98,12 @@ public class ByteHelper {
      * Copy the specified bytes into a new array
      *
      * @param array The array to copy from
-     * @param from The index in the array to begin copying from
-     * @param to The least index not copied
+     * @param from  The index in the array to begin copying from
+     * @param to    The least index not copied
      * @return A new byte[] containing the copied bytes
      */
     public static byte[] copy(byte[] array, int from, int to) {
-        if(to - from < 0) {
+        if (to - from < 0) {
             return new byte[0];
         } else {
             byte[] a = new byte[to - from];
@@ -110,8 +121,8 @@ public class ByteHelper {
     /**
      * Write a long to the byte array starting at the given offset
      *
-     * @param bytes The byte array
-     * @param value The long to write
+     * @param bytes  The byte array
+     * @param value  The long to write
      * @param offset The offset to begin writing at
      */
     public static void writeLong(byte[] bytes, int offset, long value) {
@@ -128,8 +139,8 @@ public class ByteHelper {
     /**
      * Write an int to the byte array starting at the given offset
      *
-     * @param bytes The byte array
-     * @param value The int to write
+     * @param bytes  The byte array
+     * @param value  The int to write
      * @param offset The offset to begin writing at
      */
     public static void writeInt(byte[] bytes, int offset, int value) {
@@ -170,5 +181,58 @@ public class ByteHelper {
         bytes[off + 2] = (byte) (value >>> 8);
         bytes[off + 1] = (byte) (value >>> 16);
         bytes[off] = (byte) (value >>> 24);
+    }
+
+    public static byte[] readFile2Bytes(Path path) throws IOException {
+        byte[] tmp = new byte[1024];
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        InputStream inputStream = Files.newInputStream(path);
+        int i;
+        while ((i = inputStream.read(tmp, 0, tmp.length)) != -1) {
+            byteArrayOutputStream.write(tmp, 0, i);
+        }
+        byteArrayOutputStream.flush();
+        return byteArrayOutputStream.toByteArray();
+    }
+
+    public static void writeBytes2File(byte[] src, Path path) throws IOException {
+        try (OutputStream outputStream = Files.newOutputStream(path);) {
+            outputStream.write(src);
+        }
+    }
+
+    public static boolean replaceSerialVersion(Long oldV, Long newV, byte[] sourceArr) {
+        byte[] sequenceToFind = long2bytes(oldV);
+        byte[] replacementSequence = long2bytes(newV);
+
+        int index = indexOfSequence(sourceArr, sequenceToFind);
+        if (index != -1) {
+            replaceSequence(sourceArr, index, sequenceToFind.length, replacementSequence);
+            return true;
+        }
+        return false;
+    }
+
+
+    public static int indexOfSequence(byte[] sourceArr, byte[] sequenceToFind) {
+        for (int i = 0; i <= sourceArr.length - sequenceToFind.length; i++) {
+            boolean found = true;
+            for (int j = 0; j < sequenceToFind.length; j++) {
+                if (sourceArr[i + j] != sequenceToFind[j]) {
+                    found = false;
+                    break;
+                }
+            }
+            if (found) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static void replaceSequence(byte[] sourceArr, int index, int sequenceLength, byte[] replacementSequence) {
+        for (int i = 0; i < replacementSequence.length; i++) {
+            sourceArr[index + i] = replacementSequence[i];
+        }
     }
 }

